@@ -1,0 +1,16 @@
+GET http://localhost:3002/transactions/
+
+
+###
+
+POST http://localhost:3002/transactions/
+Content-Type:application/json
+
+
+{
+    "id":1,
+    "amount":5000,
+    "type":"credit",
+    "description":"my savings",
+    "date":"28/07/2024"
+}
