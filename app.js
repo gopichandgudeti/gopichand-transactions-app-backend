@@ -45,7 +45,7 @@ app.get('/transactions/', async (request, response) => {
     ORDER BY 
       id DESC;`
   const transactions = await database.all(getTransactionQuery) // Use `all` instead of `get` to fetch all rows
-  response.send(transactions)
+  response.json(transactions)
 })
 
 app.post('/transactions/', async (request, response) => {
@@ -61,7 +61,7 @@ app.post('/transactions/', async (request, response) => {
   } else if (type === 'debit') {
     balance -= amount
   } else {
-    return response.status(400).send('Invalid transaction type')
+    return response.status(400).json({error:'Invalid transaction type'})
   }
 
   const postTransactionQuery = `
@@ -71,7 +71,7 @@ app.post('/transactions/', async (request, response) => {
       ('${id}', '${type}', ${amount}, '${description}', '${date}', ${balance});`
 
   await database.run(postTransactionQuery)
-  response.send('Transaction Successfully Added')
+  response.json({ message: 'Transaction Successfully Added' });
 })
 
 module.exports = app
